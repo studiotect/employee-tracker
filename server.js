@@ -34,8 +34,13 @@ function mainMenu() {
       }
       else if (res.action === "add a role") {
         addRole();
-       }
-      else if (res.action === "update an employee role") { }
+      }
+      else if (res.action === "add an employee") {
+        addEmployee();
+      }
+      else if (res.action === "update an employee role") {
+        updateEmployeeRole();
+      }
     })
 }
 function viewDepartments() {
@@ -96,7 +101,63 @@ function addRole(){
     });
   })
 }
-mainMenu()
+function addEmployee(){
+  inquirer.prompt([
+    {
+      type: "input",
+      message: "What's the first name of the Employee you want to add?",
+      name: "fname",
+    },
+    {
+    type: "input",
+    message: "What's the last name of the Employee you want to add?",
+    name: "lname",
+    },
+    {
+    type: "input",
+    message: "What's the role id?",
+    name: "roleId",
+    },
+    {
+    type: "input",
+    message: "What's the manager id?",
+    name: "managerId",
+    }
+  ])
+  .then (res => {
+    db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id)
+    VALUES ('${res.fname}',${res.lname},${res.roleId},${res.managerId})`, (err) => {
+      addEmployee();
+    })
+  })
+}
+function updateEmployeeRole(){
+  inquirer.prompt([
+    {
+      type: "input",
+      message: "What's the first name of the Employee you want to add?",
+      name: "fname",
+    },
+    {
+    type: "input",
+    message: "What's the last name of the Employee you want to add?",
+    name: "lname",
+    },
+    {
+    type: "input",
+    message: "What's the role id?",
+    name: "roleId",
+    },
+    {
+    type: "input",
+    message: "What's the manager id?",
+    name: "managerId",
+    }
+  ])
+  .then (res =>
+    db.query())
+}
+mainMenu();
 
 
 // define function to view all departments
